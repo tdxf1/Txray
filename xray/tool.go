@@ -11,8 +11,8 @@ import (
 
 // 获取节点代理访问外网的延迟
 func TestNode(url string, port int, timeout int) (int, string) {
-	// Add 2-second delay before testing
-   	time.Sleep(2 * time.Second)
+	// Add 3-second delay before testing
+   	time.Sleep(3 * time.Second)
 	start := time.Now()
 	res, e := GetBySocks5Proxy(url, "127.0.0.1", port, time.Duration(timeout)*time.Second)
 	elapsed := time.Since(start)
