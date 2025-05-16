@@ -48,6 +48,16 @@ var (
 	WsPath = NewField("path", "/")
 	WsHost = NilStrField("host")
 
+	// SplitHTTP
+	SpPath = NewField("path", "/")
+	SpHost = NilStrField("host")
+	SpMode = NewField("mode", "auto")
+
+	// xhttp （只有首字母大写的变量才能被包外访问）
+	XhPath = NewField("path", "/")
+	XhHost = NilStrField("host")
+	XhMode = NewField("mode", "auto")
+
 	// mKCP
 	MkcpHeaderType = NoneField("headerType") // mKCP 的伪装头部类型, 可选值 none/srtp/utp/wechat-video/dtls/wireguard
 	Seed           = NilStrField("seed")     // mKCP 种子

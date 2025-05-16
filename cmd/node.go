@@ -509,6 +509,8 @@ func InitNodeShell(shell *ishell.Shell) {
 						"h2",
 						"quic",
 						"grpc",
+						"splithttp",
+						"xhttp",
 					}
 					index = c.MultiChoice(networkList, "传输协议（network）?")
 					network := networkList[index]
@@ -608,8 +610,39 @@ func InitNodeShell(shell *ishell.Shell) {
 						if mode != "gun" {
 							data["mode"] = mode
 						}
+					case "splithttp":
+						c.Print("SplitHTTP 的路径（path）: ")
+						path := c.ReadLine()
+						if path != "" {
+							data["path"] = path
+						}
+						c.Print("SplitHTTP Host（host）: ")
+						host := c.ReadLine()
+						if host != "" {
+							data["host"] = host
+						}
+						c.Print("SplitHTTP Mode（mode）: ")
+						mode := c.ReadLine()
+						if mode != "" {
+							data["mode"] = mode
+						}						
+					case "xhttp":
+						c.Print("xhttp 的路径（path）: ")
+						path := c.ReadLine()
+						if path != "" {
+							data["path"] = path
+						}
+						c.Print("xhttp Host（host）: ")
+						host := c.ReadLine()
+						if host != "" {
+							data["host"] = host
+						}
+						c.Print("xHTTP Mode（mode）: ")
+						mode := c.ReadLine()
+						if mode != "" {
+							data["mode"] = mode
+						}	
 					}
-
 					securityList := []string{
 						"",
 						"tls",
@@ -627,10 +660,15 @@ func InitNodeShell(shell *ishell.Shell) {
 						if sni != "" {
 							data["sni"] = sni
 						}
+						//  ALPN参数选取，用于 TLS/QUIC 等协议的握手，告诉服务器客户端支持哪些应用层协议（比如 HTTP/2、HTTP/3）。
+
 						alpnList := []string{
 							"",
+							"h3",
 							"h2",
 							"http/1.1",
+							"h3,h2,http/1.1",
+							"h3,h2",
 							"h2,http/1.1",
 						}
 						index := c.MultiChoice(alpnList, "Alpn ?")

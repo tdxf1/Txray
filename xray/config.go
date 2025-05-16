@@ -617,6 +617,18 @@ func vLessOutbound(vless *protocols.VLess) interface{} {
 			"serviceName": vless.GetValue(field.GrpcServiceName),
 			"multiMode":   vless.GetValue(field.GrpcMode) == "multi",
 		}
+	case "splithttp":
+		streamSettings["splithttpSettings"] = map[string]interface{}{
+			"host": vless.GetValue(field.SpHost),
+			"path": vless.GetValue(field.SpPath),
+			"mode": vless.GetValue(field.SpMode),
+		}
+	case "xhttp":
+		streamSettings["xhttpSettings"] = map[string]interface{}{
+			"host": vless.GetValue(field.XhHost),
+			"path": vless.GetValue(field.XhPath),
+			"mode": vless.GetValue(field.XhMode),
+		}
 	}
 	return map[string]interface{}{
 		"tag":      "proxy",

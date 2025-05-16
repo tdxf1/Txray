@@ -70,6 +70,14 @@ func (v *VLess) GetInfo() string {
 	case "grpc":
 		buf.WriteString(fmt.Sprintf("%9s: %s\n", "ServiceName", v.GetValue(field.GrpcServiceName)))
 		buf.WriteString(fmt.Sprintf("%5s: %s\n", "传输模式", v.GetValue(field.GrpcMode)))
+	case "splithttp":
+		buf.WriteString(fmt.Sprintf("%9s: %s\n", "Path", v.GetValue(field.SpPath)))
+		buf.WriteString(fmt.Sprintf("%9s: %s\n", "Host", v.GetHostValue(field.SpHost)))
+		buf.WriteString(fmt.Sprintf("%7s: %s\n", "Mode", v.GetValue(field.SpMode)))
+	case "xhttp":
+		buf.WriteString(fmt.Sprintf("%9s: %s\n", "Path", v.GetValue(field.XhPath)))
+        buf.WriteString(fmt.Sprintf("%9s: %s\n", "Host", v.GetHostValue(field.XhHost)))
+		buf.WriteString(fmt.Sprintf("%7s: %s\n", "Mode", v.GetValue(field.XhMode)))
 	}
 	if v.GetValue(field.Security) == "reality" {
 		buf.WriteString(fmt.Sprintf("%9s: %s\n", "FingerPrint", v.GetValue(field.FingerPrint)))
