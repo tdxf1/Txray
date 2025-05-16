@@ -1,3 +1,4 @@
+// core/protocols/vmess.go 负责 VMess 协议的定义与相关操作
 package protocols
 
 import (
@@ -7,6 +8,7 @@ import (
 	"strconv"
 )
 
+// VMess 结构体定义了 VMess 协议所需的各项属性
 type VMess struct {
 	V    string `json:"v"`
 	Ps   string `json:"ps"`
@@ -24,22 +26,27 @@ type VMess struct {
 	Alpn string `json:"alpn"`
 }
 
+// GetProtocolMode 返回协议模式
 func (v *VMess) GetProtocolMode() Mode {
 	return ModeVMess
 }
 
+// GetName 返回用户自定义的别名
 func (v *VMess) GetName() string {
 	return v.Ps
 }
 
+// GetAddr 返回服务器地址
 func (v *VMess) GetAddr() string {
 	return v.Add
 }
 
+// GetPort 返回端口号
 func (v *VMess) GetPort() int {
 	return v.Port
 }
 
+// GetInfo 返回 VMess 配置的详细信息，包含别名、地址、端口、用户ID、额外ID、加密方式等
 func (v *VMess) GetInfo() string {
 	var buf bytes.Buffer
 	buf.WriteString(fmt.Sprintf("%7s: %s\n", "别名", v.Ps))
@@ -60,6 +67,7 @@ func (v *VMess) GetInfo() string {
 	return buf.String()
 }
 
+// GetLink 生成 VMess 链接
 func (v *VMess) GetLink() string {
 	data := map[string]string{
 		"v":    v.V,
@@ -81,6 +89,7 @@ func (v *VMess) GetLink() string {
 	return "vmess://" + base64EncodeWithEq(string(jsonData))
 }
 
+// Check 检查 VMess 配置是否有效
 func (v *VMess) Check() *VMess {
 	if v.Add != "" && v.Port > 0 && v.Port <= 65535 && v.Ps != "" && v.Id != "" && v.Net != "" {
 		return v

@@ -1,3 +1,4 @@
+// core/protocols/vless.go 负责 VLESS 协议的定义与相关操作
 package protocols
 
 import (
@@ -7,6 +8,7 @@ import (
 	"net/url"
 )
 
+// VLess 结构体定义了 VLESS 协议所需的基本信息
 type VLess struct {
 	ID      string `json:"id"`
 	Address string `json:"address"`
@@ -95,6 +97,7 @@ func (v *VLess) GetLink() string {
 	return u.String()
 }
 
+// GetValue 根据字段获取对应的值
 func (v *VLess) GetValue(field field.Field) string {
 	if v.Has(field.Key) {
 		return v.Get(field.Key)
@@ -110,6 +113,7 @@ func (v *VLess) GetHostValue(field field.Field) string {
 	return v.Address
 }
 
+// Check 检查 VLess 节点信息是否完整
 func (v *VLess) Check() *VLess {
 	if v.ID != "" && v.Port > 0 && v.Port <= 65535 && v.Address != "" && v.Remarks != "" {
 		return v

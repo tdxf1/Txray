@@ -1,3 +1,4 @@
+// core/protocols/vmessAEAD.go 负责 VMess AEAD 协议的定义与相关操作
 package protocols
 
 import (
@@ -7,6 +8,7 @@ import (
 	"net/url"
 )
 
+// VMessAEAD 结构体定义了 VMess AEAD 协议所需的基本信息
 type VMessAEAD struct {
 	ID      string `json:"id"`
 	Address string `json:"address"`
@@ -94,6 +96,7 @@ func (v *VMessAEAD) GetLink() string {
 	return u.String()
 }
 
+// GetValue 根据字段获取对应的值
 func (v *VMessAEAD) GetValue(field field.Field) string {
 	if v.Has(field.Key) {
 		return v.Get(field.Key)
@@ -109,6 +112,7 @@ func (v *VMessAEAD) GetHostValue(field field.Field) string {
 	return v.Address
 }
 
+// Check 检查 VMessAEAD 结构体中的必需字段是否有效
 func (v *VMessAEAD) Check() *VMessAEAD {
 	if v.ID != "" && v.Port > 0 && v.Port <= 65535 && v.Address != "" && v.Remarks != "" {
 		return v

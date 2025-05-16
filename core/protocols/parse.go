@@ -1,3 +1,4 @@
+// core/protocols/parse.go 负责协议字符串的解析与转换
 package protocols
 
 import (
@@ -47,6 +48,7 @@ func ParseLink(link string) Protocol {
 	return nil
 }
 
+// ParseVMessAEADLink 解析 vmess 链接，返回 VMessAEAD 对象
 func ParseVMessAEADLink(link string) *VMessAEAD {
 	u, err := url.Parse(link)
 	if err != nil {
@@ -73,6 +75,7 @@ func ParseVMessAEADLink(link string) *VMessAEAD {
 	return vless.Check()
 }
 
+// ParseVLessLink 解析 vless 链接，返回 VLess 对象
 func ParseVLessLink(link string) *VLess {
 	u, err := url.Parse(link)
 	if err != nil {
@@ -99,6 +102,7 @@ func ParseVLessLink(link string) *VLess {
 	return vless.Check()
 }
 
+// ParseSocksLink 解析 socks 链接，返回 Socks 对象
 func ParseSocksLink(link string) *Socks {
 	u, err := url.Parse(link)
 	if err != nil {
@@ -125,6 +129,7 @@ func ParseSocksLink(link string) *Socks {
 	return socks.Check()
 }
 
+// ParseVMessLink 解析 vmess 链接，返回 VMess 对象
 func ParseVMessLink(link string) *VMess {
 	vmess := new(VMess)
 	if strings.ToLower(link[:8]) == "vmess://" {
@@ -221,6 +226,7 @@ func ParseVMessLink(link string) *VMess {
 	return vmess.Check()
 }
 
+// ParseTrojanLink 解析 trojan 链接，返回 Trojan 对象
 func ParseTrojanLink(link string) *Trojan {
 	u, err := url.Parse(link)
 	if err != nil {
@@ -247,6 +253,7 @@ func ParseTrojanLink(link string) *Trojan {
 	return trojan.Check()
 }
 
+// ParseSSRLink 解析 ssr 链接，返回 ShadowSocksR 对象
 func ParseSSRLink(link string) *ShadowSocksR {
 	ssr := new(ShadowSocksR)
 	if strings.ToLower(link[:6]) == "ssr://" {
@@ -293,6 +300,7 @@ func ParseSSRLink(link string) *ShadowSocksR {
 	return ssr
 }
 
+// ParseSSLink 解析 ss 链接，返回 ShadowSocks 对象
 func ParseSSLink(link string) *ShadowSocks {
 	u, err := url.Parse(link)
 	if err != nil {

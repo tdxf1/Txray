@@ -1,10 +1,13 @@
+// core/protocols/field/field.go 负责协议字段的定义与相关操作
 package field
 
+// Field 结构体表示一个协议字段，包括字段名和默认值
 type Field struct {
 	Key   string // 字段名
 	Value string // 默认值
 }
 
+// NilStrField 返回一个字段名为 key 的 Field 实例，默认值为空字符串
 func NilStrField(key string) Field {
 	return Field{
 		Key:   key,
@@ -12,6 +15,7 @@ func NilStrField(key string) Field {
 	}
 }
 
+// NoneField 返回一个字段名为 key 的 Field 实例，默认值为 "none"
 func NoneField(key string) Field {
 	return Field{
 		Key:   key,
@@ -19,6 +23,7 @@ func NoneField(key string) Field {
 	}
 }
 
+// NewField 返回一个字段名为 key，默认值为 value 的 Field 实例
 func NewField(key, value string) Field {
 	return Field{
 		Key:   key,
@@ -62,7 +67,7 @@ var (
 	Flow     = NilStrField("flow") // XTLS 的流控方式，可选值xtls-rprx-direct/xtls-rprx-splice
 
 	FingerPrint = NewField("fp", "chrome") // TLS Client Hello 指纹
-	PublicKey = NilStrField("pbk") // REALITY的公钥
-	ShortId = NilStrField("sid") // REALITY 的 ID
-	SpiderX = NilStrField("spx") // REALITY 的爬虫
+	PublicKey   = NilStrField("pbk")       // REALITY的公钥
+	ShortId     = NilStrField("sid")       // REALITY 的 ID
+	SpiderX     = NilStrField("spx")       // REALITY 的爬虫
 )

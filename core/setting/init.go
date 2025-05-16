@@ -1,3 +1,4 @@
+// core/setting/init.go 负责设置模块的初始化流程
 package setting
 
 import (

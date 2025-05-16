@@ -1,3 +1,4 @@
+// xray/service.go 负责 xray 核心服务的启动、停止、状态管理等功能
 package xray
 
 import (
@@ -17,6 +18,8 @@ import (
 
 var Xray *exec.Cmd
 
+// Start 根据用户选择的节点信息，启动相应的 xray 服务
+// key : 用户的节点选择的 key
 func Start(key string) {
 	testUrl := setting.TestUrl()
 	testTimeout := setting.TestTimeout()
@@ -83,6 +86,8 @@ func Start(key string) {
 	}
 }
 
+// run 根据节点协议启动相应的 xray 子进程
+// node : 节点的协议配置
 func run(node protocols.Protocol) bool {
 	Stop()
 	switch node.GetProtocolMode() {

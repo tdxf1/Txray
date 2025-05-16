@@ -120,8 +120,37 @@ PS：开机自启推荐搭配[命令别名](#查看命令别名帮助文档)使�
 1. 在终端下进入项目目录
 
 2. 设置`GOPROXY`,提高编译所需依赖的下载速度
-   Linux/Mac 下，运行 `GOPROXY=https://goproxy.cn,direct`
-   Windows 下,运行 `set GOPROXY=https://goproxy.cn,direct`
+   ## Linux/Mac
+   启用 Go Modules 功能
+   `go env -w GO111MODULE=on`
+   
+   设置 Go 模块代理，选一即可
+   1. 七牛 CDN 
+   `go env -w  GOPROXY=https://goproxy.cn,direct`
+   2. 阿里云
+   `go env -w GOPROXY=https://mirrors.aliyun.com/goproxy/,direct`
+   3. 腾讯云
+   `go env -w GOPROXY=https://mirrors.cloud.tencent.com/go/,direct`
+   4. 官方
+   `go env -w  GOPROXY=https://goproxy.io,direct`
+
+   ## windows
+   启用 Go Modules 功能
+   `env:GO111MODULE="on"`
+
+   设置 Go 模块代理，选一即可
+   1. 七牛 CDN 
+   `set GOPROXY=https://goproxy.cn,direct`
+   2. 阿里云
+   `env:GOPROXY="https://mirrors.aliyun.com/goproxy/,direct`
+   3. 腾讯云
+   `env:GOPROXY=https://mirrors.cloud.tencent.com/go/,direct`
+   4. 官方
+    `env:GOPROXY="https://goproxy.io,direct`
+
+   ## 检查
+   `go env | grep GOPROXY`
+
 
 3. 编译常用平台
    运行 `go build Txray.go`, 可编译当前平台的版本

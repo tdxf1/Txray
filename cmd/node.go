@@ -1,29 +1,33 @@
+// cmd/node.go 负责 shell 层面节点管理命令的注册与实现
 package cmd
 
 import (
-	"Txray/cmd/help"
-	"Txray/core"
-	"Txray/core/manage"
-	"Txray/core/node"
-	"Txray/core/protocols"
-	"Txray/core/sub"
-	"Txray/log"
-	"fmt"
-	"io/ioutil"
-	"net/url"
-	"os"
-	"strconv"
-	"strings"
+	"Txray/cmd/help"      // 帮助文档内容
+	"Txray/core"          // 索引工具
+	"Txray/core/manage"   // 节点管理器
+	"Txray/core/node"     // 节点结构体
+	"Txray/core/protocols"// 协议定义
+	"Txray/core/sub"      // 订阅相关
+	"Txray/log"           // 日志
+	"fmt"                 // 格式化输出
+	"io/ioutil"           // 文件读取
+	"net/url"             // URL 解析
+	"os"                  // 系统操作
+	"strconv"             // 字符串与数字转换
+	"strings"             // 字符串处理
 
-	"github.com/abiosoft/ishell"
-	"github.com/atotto/clipboard"
-	"github.com/olekukonko/tablewriter"
+	"github.com/abiosoft/ishell" // shell 框架
+	"github.com/atotto/clipboard" // 剪贴板操作
+	"github.com/olekukonko/tablewriter" // 表格输出
 )
 
+
+// InitNodeShell 注册 node 命令及其子命令，支持节点展示、添加、删除、测试、帮助等
 func InitNodeShell(shell *ishell.Shell) {
 	nodeCmd := &ishell.Cmd{
 		Name: "node",
 		Func: func(c *ishell.Context) {
+			// 解析参数，支持 -d 降序
 			argMap := FlagsParse(c.Args, map[string]string{
 				"d": "desc",
 			})

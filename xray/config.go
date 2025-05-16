@@ -1,28 +1,30 @@
+// xray/config.go 负责生成 xray-core 的配置文件，包含日志、入站、出站、策略、DNS、路由等配置项
 package xray
 
 import (
-	"Txray/core"
-	"Txray/core/protocols"
-	"Txray/core/protocols/field"
-	"Txray/core/routing"
-	"Txray/core/setting"
-	"Txray/log"
-	"path/filepath"
-	"strings"
+	"Txray/core"              // 配置目录、文件写入
+	"Txray/core/protocols"    // 协议定义
+	"Txray/core/protocols/field" // 字段定义
+	"Txray/core/routing"      // 路由配置
+	"Txray/core/setting"      // 设置项
+	"Txray/log"               // 日志
+	"path/filepath"           // 路径处理
+	"strings"                 // 字符串处理
 )
 
-// 生成xray-core配置文件
+// GenConfig 生成 xray-core 配置文件，返回配置文件路径
+// node: 协议节点对象
 func GenConfig(node protocols.Protocol) string {
-	path := filepath.Join(core.GetConfigDir(), "config.json")
+	path := filepath.Join(core.GetConfigDir(), "config.json") // 配置文件路径
 	var conf = map[string]interface{}{
-		"log":       logConfig(),
-		"inbounds":  inboundsConfig(),
-		"outbounds": outboundConfig(node),
-		"policy":    policyConfig(),
-		"dns":       dnsConfig(),
-		"routing":   routingConfig(),
+		"log":       logConfig(),      // 日志配置
+		"inbounds":  inboundsConfig(),// 入站配置
+		"outbounds": outboundConfig(node), // 出站配置
+		"policy":    policyConfig(),  // 策略配置
+		"dns":       dnsConfig(),     // DNS 配置
+		"routing":   routingConfig(), // 路由配置
 	}
-	err := core.WriteJSON(conf, path)
+	err := core.WriteJSON(conf, path) // 写入 JSON 文件
 	if err != nil {
 		log.Error(err)
 		panic(err)
@@ -30,20 +32,20 @@ func GenConfig(node protocols.Protocol) string {
 	return path
 }
 
-// 日志
+// logConfig 生成日志配置
 func logConfig() interface{} {
 	path := core.LogFile
 	return map[string]string{
-		"access":   path,
-		"loglevel": "warning",
+		"access":   path,         // 访问日志路径
+		"loglevel": "warning",  // 日志级别
 	}
 }
 
-// 入站
+// inboundsConfig 生成入站配置
 func inboundsConfig() interface{} {
-	listen := "127.0.0.1"
+	listen := "127.0.0.1" // 默认仅本地监听
 	if setting.FromLanConn() {
-		listen = "0.0.0.0"
+		listen = "0.0.0.0" // 允许局域网访问
 	}
 	data := []interface{}{
 		map[string]interface{}{
