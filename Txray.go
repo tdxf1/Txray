@@ -16,7 +16,7 @@ import (
 )
 
 const (
-	version = "v3.0.9" // 程序版本号
+	version = "v25.6.1.1" // 程序版本号
 	name    = "Txray"   // 程序名称
 )
 

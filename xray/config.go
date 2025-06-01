@@ -48,7 +48,31 @@ func inboundsConfig() interface{} {
 		listen = "0.0.0.0" // 允许局域网访问
 	}
 	data := []interface{}{
+		// 默认处理混合入站流量
 		map[string]interface{}{
+			"tag":      "mixed",
+			"port":     setting.Mixed(),
+			"listen":   listen,
+			"protocol": "mixed",
+			"sniffing": map[string]interface{}{
+				"enabled": setting.Sniffing(),
+				"destOverride": []string{
+					"http",
+					"tls",
+					"quic",
+					"fakedns",
+					"fakedns+others",
+				},
+			},
+			"settings": map[string]interface{}{
+				"auth":      "noauth",
+				"udp":       setting.UDP(),
+				"userLevel": 0,
+			},
+		},
+	}
+	if setting.Socks() > 0 {
+		data = append(data, map[string]interface{}{ // 添加 Socks5 入站
 			"tag":      "proxy",
 			"port":     setting.Socks(),
 			"listen":   listen,
@@ -65,7 +89,7 @@ func inboundsConfig() interface{} {
 				"udp":       setting.UDP(),
 				"userLevel": 0,
 			},
-		},
+		})
 	}
 	if setting.Http() > 0 {
 		data = append(data, map[string]interface{}{

@@ -33,6 +33,8 @@ func (s *Subscirbe) UpdataNode(opt UpdataOption) []string {
 	var err error
 	// 根据代理模式选择不同的获取方式
 	switch opt.proxyMode() {
+		case MIXED:
+		res, err = GetByMixedProxy(s.Url, opt.addr(), opt.port(), opt.timeout())
 	case SOCKS:
 		res, err = GetBySocks5Proxy(s.Url, opt.addr(), opt.port(), opt.timeout())
 	case HTTP:

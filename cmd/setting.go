@@ -19,9 +19,10 @@ func InitSettingShell(shell *ishell.Shell) {
 		Func: func(c *ishell.Context) {
 			// 展示连接基础设置
 			table := tablewriter.NewWriter(os.Stdout)
-			table.SetHeader([]string{"socks端口", "http端口", "udp转发", "流量地址监听", "允许来自局域网连接", "多路复用", "允许不安全的连接"})
+			table.SetHeader([]string{"mixed端口", "socks端口", "http端口", "udp转发", "流量地址监听", "允许来自局域网连接", "多路复用", "允许不安全的连接"})
 			table.SetAlignment(tablewriter.ALIGN_CENTER)
 			data := []string{
+				strconv.Itoa(setting.Mixed()),
 				strconv.Itoa(setting.Socks()),
 				strconv.Itoa(setting.Http()),
 				strconv.FormatBool(setting.UDP()),
@@ -70,6 +71,25 @@ func InitSettingShell(shell *ishell.Shell) {
 	})
 
 	// 本地连接设置
+	baseSettingCmd.AddCmd(&ishell.Cmd{
+		Name: "mixed",
+		Func: func(c *ishell.Context) {
+			if len(c.Args) > 0 {
+				v, err := strconv.Atoi(c.Args[0])
+				if err != nil {
+					log.Warn("非法输入")
+					return
+				}
+				err = setting.SetMixed(v)
+				if err != nil {
+					log.Error(err)
+					return
+				}
+				log.Info("mixed端口: ", setting.Mixed())
+			}
+		},
+	})
+	
 	baseSettingCmd.AddCmd(&ishell.Cmd{
 		Name: "socks",
 		Func: func(c *ishell.Context) {

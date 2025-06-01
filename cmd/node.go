@@ -307,6 +307,7 @@ func InitNodeShell(shell *ishell.Shell) {
 						"tcp",
 						"kcp",
 						"ws",
+						"xhttp",
 						"h2",
 						"quic",
 						"grpc",
@@ -346,6 +347,29 @@ func InitNodeShell(shell *ishell.Shell) {
 						if host != "" {
 							data["host"] = host
 						}
+
+					case "xhttp":
+						typeList := []string{
+							"auto",
+							"packet-up",
+							"stream-up",
+							"stream-one",
+						}
+						index := c.MultiChoice(typeList, "xhttp 的模式（mode）?")
+						mode := typeList[index]
+						data["mode"] = mode
+
+						c.Print("xhttp 的路径（path）: ")
+						path := c.ReadLine()
+						if path != "" {
+							data["path"] = path
+						}
+						c.Print("xhttp Host（host）: ")
+						host := c.ReadLine()
+						if host != "" {
+							data["host"] = host
+						}
+
 					case "h2":
 						c.Print("HTTP/2 的路径（path）: ")
 						path := c.ReadLine()
@@ -506,11 +530,11 @@ func InitNodeShell(shell *ishell.Shell) {
 						"tcp",
 						"kcp",
 						"ws",
+						"xhttp",
 						"h2",
 						"quic",
 						"grpc",
 						"splithttp",
-						"xhttp",
 					}
 					index = c.MultiChoice(networkList, "传输协议（network）?")
 					network := networkList[index]

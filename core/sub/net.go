@@ -9,6 +9,24 @@ import (
 	"time"
 )
 
+// 通过Mixed代理访问网站
+// objUrl: 目标网址
+// proxyAddress: 代理地址
+// proxyPort: 代理端口
+// timeOut: 超时时间
+// 返回http响应和错误信息
+func GetByMixedProxy(objUrl, proxyAddress string, proxyPort int, timeOut time.Duration) (*http.Response, error) {
+	proxy := func(_ *http.Request) (*url.URL, error) {
+		return url.Parse(fmt.Sprintf("http://%s:%d", proxyAddress, proxyPort))
+	}
+	transport := &http.Transport{Proxy: proxy}
+	client := &http.Client{
+		Transport: transport,
+		Timeout:   timeOut,
+	}
+	return client.Get(objUrl)
+}
+
 // 通过http代理访问网站
 // objUrl: 目标网址
 // proxyAddress: 代理地址

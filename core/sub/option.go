@@ -11,6 +11,7 @@ type ProxyProtocol int
 
 const (
 	NONE ProxyProtocol = iota // 无代理
+	MIXED                     // 混合代理
 	SOCKS                     // SOCKS代理
 	HTTP                      // HTTP代理
 )
@@ -44,6 +45,8 @@ func (o *UpdataOption) port() int {
 		return o.Port
 	}
 	switch o.ProxyMode {
+	case MIXED:
+		return setting.Mixed()
 	case SOCKS:
 		return setting.Socks()
 	case HTTP:

@@ -4,7 +4,8 @@ Commands:
                                   查看所有设置
     help                          查看帮助
 
-    socks [port]                  设置socks端口
+    mixed [port]                  设置混合端口
+    socks [port]                  设置socks端口,0为关闭socks监听
     http [port]                   设置http端口, 0为关闭http监听
     udp [y|n]                     是否启用udp转发
     sniffing [y|n]                是否启用流量地址监听

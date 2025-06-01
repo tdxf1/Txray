@@ -6,6 +6,19 @@ import (
 	"errors"
 	"github.com/spf13/viper"
 )
+// Mixed 返回当前混合代理端口
+func Mixed() int {
+	return viper.GetInt(key.Mixed)
+}
+// SetMixed 设置混合代理端口
+// port: 代理端口，取值范围为 1~65535
+func SetMixed(port int) error {
+	if port < 1 || port > 65535 {
+		return errors.New("混合代理端口取值 1~65535")
+	}
+	viper.Set(key.Mixed, port)
+	return viper.WriteConfig()
+}
 
 // Socks 返回当前socks代理端口
 func Socks() int {

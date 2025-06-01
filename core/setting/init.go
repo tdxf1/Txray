@@ -20,7 +20,8 @@ func init() {
 	viper.SetConfigType("toml")
 	viper.AddConfigPath(core.GetConfigDir())
 	// 设置默认值
-	viper.SetDefault(key.Socks, 23333)
+	viper.SetDefault(key.Mixed, 1025)
+	viper.SetDefault(key.Socks, 0)
 	viper.SetDefault(key.Http, 0)
 	viper.SetDefault(key.UDP, true)
 	viper.SetDefault(key.Sniffing, true)
