@@ -443,9 +443,12 @@ func InitNodeShell(shell *ishell.Shell) {
 						}
 						alpnList := []string{
 							"",
+							"h3",
 							"h2",
 							"http/1.1",
+							"h3,h2",
 							"h2,http/1.1",
+							"h3,h2,http/1.1",
 						}
 						index := c.MultiChoice(alpnList, "Alpn ?")
 						if alpnList[index] != "" {
@@ -691,9 +694,9 @@ func InitNodeShell(shell *ishell.Shell) {
 							"h3",
 							"h2",
 							"http/1.1",
-							"h3,h2,http/1.1",
 							"h3,h2",
 							"h2,http/1.1",
+							"h3,h2,http/1.1",
 						}
 						index := c.MultiChoice(alpnList, "Alpn ?")
 						if alpnList[index] != "" {
@@ -708,9 +711,12 @@ func InitNodeShell(shell *ishell.Shell) {
 						}
 						alpnList := []string{
 							"",
+							"h3",
 							"h2",
 							"http/1.1",
+							"h3,h2",
 							"h2,http/1.1",
+							"h3,h2,http/1.1",
 						}
 						index := c.MultiChoice(alpnList, "Alpn ?")
 						if alpnList[index] != "" {
@@ -869,9 +875,12 @@ func InitNodeShell(shell *ishell.Shell) {
 						vmess.Sni = c.ReadLine()
 						alpnList := []string{
 							"",
+							"h3",
 							"h2",
 							"http/1.1",
+							"h3,h2",
 							"h2,http/1.1",
+							"h3,h2,http/1.1",
 						}
 						index := c.MultiChoice(alpnList, "Alpn ?")
 						vmess.Alpn = alpnList[index]
