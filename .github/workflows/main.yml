@@ -1,0 +1,48 @@
+name: Build Txray
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: # 手动触发功能
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [windows, linux]
+        arch: [amd64, arm64]
+        exclude:
+          - os: windows
+            arch: arm64 # 排除 Windows 不支持的 arm64
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.19 # 项目中使用的 Go 版本
+
+      - name: Set GOPROXY
+        run: |
+          go env -w GOPROXY=https://goproxy.cn,direct
+
+      - name: Download dependencies
+        run: |
+          go mod tidy
+
+      - name: Build for ${{ matrix.os }}/${{ matrix.arch }}
+        run: |
+          GOOS=${{ matrix.os }} GOARCH=${{ matrix.arch }} CGO_ENABLED=0 go build -o build/Txray-${{ matrix.os }}-${{ matrix.arch }} Txray.go
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Txray-${{ matrix.os }}-${{ matrix.arch }}
+          path: build/Txray-${{ matrix.os }}-${{ matrix.arch }}
