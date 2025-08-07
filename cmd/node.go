@@ -2,25 +2,23 @@
 package cmd
 
 import (
-	"Txray/cmd/help"      // 帮助文档内容
-	"Txray/core"          // 索引工具
-	"Txray/core/manage"   // 节点管理器
-	"Txray/core/node"     // 节点结构体
-	"Txray/core/protocols"// 协议定义
-	"Txray/core/sub"      // 订阅相关
-	"Txray/log"           // 日志
-	"fmt"                 // 格式化输出
-	"io/ioutil"           // 文件读取
-	"net/url"             // URL 解析
-	"os"                  // 系统操作
-	"strconv"             // 字符串与数字转换
-	"strings"             // 字符串处理
+	"Txray/cmd/help"       // 帮助文档内容
+	"Txray/core"           // 索引工具
+	"Txray/core/manage"    // 节点管理器
+	"Txray/core/node"      // 节点结构体
+	"Txray/core/protocols" // 协议定义
+	"Txray/core/sub"       // 订阅相关
+	"Txray/log"            // 日志
+	"fmt"                  // 格式化输出
+	"net/url"              // URL 解析
+	"os"                   // 系统操作
+	"strconv"              // 字符串与数字转换
+	"strings"              // 字符串处理
 
-	"github.com/abiosoft/ishell" // shell 框架
-	"github.com/atotto/clipboard" // 剪贴板操作
+	"github.com/abiosoft/ishell"        // shell 框架
+	"github.com/atotto/clipboard"       // 剪贴板操作
 	"github.com/olekukonko/tablewriter" // 表格输出
 )
-
 
 // InitNodeShell 注册 node 命令及其子命令，支持节点展示、添加、删除、测试、帮助等
 func InitNodeShell(shell *ishell.Shell) {
@@ -253,7 +251,7 @@ func InitNodeShell(shell *ishell.Shell) {
 					log.Error("open ", fileArg, " : 没有这个文件")
 					return
 				}
-				data, _ := ioutil.ReadFile(fileArg)
+				data, _ := os.ReadFile(fileArg)
 				content := strings.ReplaceAll(string(data), "\r\n", "\n")
 				content = strings.ReplaceAll(content, "\r", "\n")
 				c.Println("文件内容如下：")
@@ -652,7 +650,7 @@ func InitNodeShell(shell *ishell.Shell) {
 						mode := c.ReadLine()
 						if mode != "" {
 							data["mode"] = mode
-						}						
+						}
 					case "xhttp":
 						c.Print("xhttp 的路径（path）: ")
 						path := c.ReadLine()
@@ -668,7 +666,7 @@ func InitNodeShell(shell *ishell.Shell) {
 						mode := c.ReadLine()
 						if mode != "" {
 							data["mode"] = mode
-						}	
+						}
 					}
 					securityList := []string{
 						"",
@@ -786,7 +784,7 @@ func InitNodeShell(shell *ishell.Shell) {
 					vmess.Id = c.ReadLine()
 					c.Print("额外ID（alterID）: ")
 					alterID, err := strconv.Atoi(c.ReadLine())
-					if err != nil  {
+					if err != nil {
 						log.Warn("额外ID为数字")
 						return
 					}
@@ -848,7 +846,7 @@ func InitNodeShell(shell *ishell.Shell) {
 							c.Print("QUIC的加密key（path）: ")
 							vmess.Path = c.ReadLine()
 						}
-						
+
 					case "ws", "h2":
 						c.Print("Host（host）: ")
 						vmess.Host = c.ReadLine()
