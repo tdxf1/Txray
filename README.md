@@ -219,7 +219,8 @@ setting {commands}
 Commands:
                                   查看所有设置
     help                          查看帮助
-
+    
+    mixed [port]                  设置混合端口
     socks [port]                  设置socks端口
     http [port]                   设置http端口, 0为关闭http监听
     udp [y|n]                     是否启用udp转发
@@ -234,6 +235,9 @@ Commands:
 
     routing.strategy {1|2|3}      设置路由策略为{AsIs|IPIfNonMatch|IPOnDemand}
     routing.bypass {y|n}          是否绕过局域网及大陆
+
+    version.min [version]         设置版本最小值，为空表示不限制
+    version.max [version]         设置版本最大值，为空表示不限制
 
     test.url [url]                设置外网测试URL
     test.timeout [time]           设置外网测试超时时间 (秒)

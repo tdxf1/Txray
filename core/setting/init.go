@@ -20,6 +20,7 @@ func init() {
 	viper.SetConfigType("toml")
 	viper.AddConfigPath(core.GetConfigDir())
 	// 设置默认值
+	// Xray-core 一直都支持代理协议来端口转发 https://github.com/XTLS/Xray-core/pull/4968
 	viper.SetDefault(key.Mixed, 1025)
 	viper.SetDefault(key.Socks, 0)
 	viper.SetDefault(key.Http, 0)
@@ -43,6 +44,10 @@ func init() {
 	viper.SetDefault(key.RunBefore, "")
 
 	viper.SetDefault(key.PID, 0)
+
+	viper.SetDefault(key.VersionMin, "") // 版本最小值，默认为空（不限制）
+	viper.SetDefault(key.VersionMax, "") // 版本最大值，默认为空（不限制）
+
 	// 读取配置文件
 	err := viper.ReadInConfig()
 	if err != nil {

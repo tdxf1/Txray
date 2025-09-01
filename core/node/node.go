@@ -60,10 +60,10 @@ func (n *Node) Tcping() {
 	var sum float64
 	var timeout time.Duration = 3 * time.Second
 	isTimeout := false
-	for i := 0; i < count; i++ {
+	for range count {
 		start := time.Now()
 		d := net.Dialer{Timeout: timeout}
-		conn, err := d.Dial("tcp", fmt.Sprintf("%s:%d", n.GetAddr(), n.GetPort()))
+		conn, err := d.Dial("tcp", net.JoinHostPort(n.GetAddr(), fmt.Sprintf("%d", n.GetPort())))
 		if err != nil {
 			isTimeout = true
 			break

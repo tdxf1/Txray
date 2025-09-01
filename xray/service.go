@@ -36,15 +36,15 @@ func Start(key string) {
 		if exe {
 			if setting.Socks() == 0 {
 				if setting.Http() == 0 {
-				    log.Infof("启动成功, 监听mixed端口: %d, 所选节点: %d", setting.Mixed(), manager.SelectedIndex())
+					log.Infof("启动成功, 监听mixed端口: %d, 所选节点: %d", setting.Mixed(), manager.SelectedIndex())
 				} else {
-				    log.Infof("启动成功, 监听mixed/http端口: %d/%d, 所选节点: %d", setting.Mixed(), setting.Http(), manager.SelectedIndex())
+					log.Infof("启动成功, 监听mixed/http端口: %d/%d, 所选节点: %d", setting.Mixed(), setting.Http(), manager.SelectedIndex())
 				}
 			} else {
 				if setting.Http() == 0 {
-				    log.Infof("启动成功, 监听mixed/socks端口: %d/%d, 所选节点: %d", setting.Mixed(), setting.Socks(), manager.SelectedIndex())
+					log.Infof("启动成功, 监听mixed/socks端口: %d/%d, 所选节点: %d", setting.Mixed(), setting.Socks(), manager.SelectedIndex())
 				} else {
-				    log.Infof("启动成功, 监听mixed/socks/http端口: %d/%d/%d, 所选节点: %d", setting.Mixed(), setting.Socks(), setting.Http(), manager.SelectedIndex())
+					log.Infof("启动成功, 监听mixed/socks/http端口: %d/%d/%d, 所选节点: %d", setting.Mixed(), setting.Socks(), setting.Http(), manager.SelectedIndex())
 				}
 			}
 			result, status := TestNode(testUrl, setting.Mixed(), testTimeout)
@@ -59,7 +59,7 @@ func Start(key string) {
 			if exe {
 				result, status := TestNode(testUrl, setting.Mixed(), testTimeout)
 				log.Infof("%6s [ %s ] 节点: %d, 延迟: %dms", status, testUrl, index, result)
-				if result > 0 && result <= setting.TestMinTime(){
+				if result > 0 && result <= setting.TestMinTime() {
 					i = index
 					min = result
 					break
@@ -150,8 +150,8 @@ func Stop() {
 	}
 	// 日志文件过大清除
 	file, _ := os.Stat(core.LogFile)
-	if file != nil  {
-		fileSize := float64(file.Size())/ (1 << 20)
+	if file != nil {
+		fileSize := float64(file.Size()) / (1 << 20)
 		if fileSize > 5 {
 			os.Remove(core.LogFile)
 		}

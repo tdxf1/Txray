@@ -11,7 +11,7 @@ type Mode string
 
 const (
 	ModeIP     Mode = "IP"     // IP 表示 IP 地址规则
-	ModeDomain      = "Domain"  // Domain 表示域名规则
+	ModeDomain Mode = "Domain" // Domain 表示域名规则
 )
 
 // 判断是IP规则还是域名规则

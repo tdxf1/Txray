@@ -6,10 +6,12 @@ import (
 	"errors"
 	"github.com/spf13/viper"
 )
+
 // Mixed 返回当前混合代理端口
 func Mixed() int {
 	return viper.GetInt(key.Mixed)
 }
+
 // SetMixed 设置混合代理端口
 // port: 代理端口，取值范围为 1~65535
 func SetMixed(port int) error {
@@ -119,5 +121,29 @@ func AllowInsecure() bool {
 // status: true允许不安全连接，false不允许
 func SetAllowInsecure(status bool) error {
 	viper.Set(key.AllowInsecure, status)
+	return viper.WriteConfig()
+}
+
+// VersionMin 返回当前版本最小值
+func VersionMin() string {
+	return viper.GetString(key.VersionMin)
+}
+
+// SetVersionMin 设置版本最小值
+// min: 版本最小值，为空字符串表示不限制
+func SetVersionMin(min string) error {
+	viper.Set(key.VersionMin, min)
+	return viper.WriteConfig()
+}
+
+// VersionMax 返回当前版本最大值
+func VersionMax() string {
+	return viper.GetString(key.VersionMax)
+}
+
+// SetVersionMax 设置版本最大值
+// max: 版本最大值，为空字符串表示不限制
+func SetVersionMax(max string) error {
+	viper.Set(key.VersionMax, max)
 	return viper.WriteConfig()
 }

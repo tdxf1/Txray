@@ -2,14 +2,15 @@
 package cmd
 
 import (
-	"Txray/cmd/help"      // 帮助文档内容
-	"Txray/core/setting"  // 设置项
-	"Txray/log"           // 日志
-	"github.com/abiosoft/ishell" // shell 框架
+	"Txray/cmd/help"     // 帮助文档内容
+	"Txray/core/setting" // 设置项
+	"Txray/log"          // 日志
+	"os"                 // 系统操作
+	"strconv"            // 字符串与数字转换
+	"strings"            // 字符串处理
+
+	"github.com/abiosoft/ishell"        // shell 框架
 	"github.com/olekukonko/tablewriter" // 表格输出
-	"os"                  // 系统操作
-	"strconv"             // 字符串与数字转换
-	"strings"             // 字符串处理
 )
 
 // InitSettingShell 注册 setting 命令及其子命令，展示所有设置项
@@ -45,6 +46,17 @@ func InitSettingShell(shell *ishell.Shell) {
 				setting.DNSBackup(),
 				setting.RoutingStrategy(),
 				strconv.FormatBool(setting.RoutingBypass()),
+			}
+			table.Append(data)
+			table.Render()
+
+			// 版本设置
+			table = tablewriter.NewWriter(os.Stdout)
+			table.SetHeader([]string{"版本最小值", "版本最大值"})
+			table.SetAlignment(tablewriter.ALIGN_CENTER)
+			data = []string{
+				setting.VersionMin(),
+				setting.VersionMax(),
 			}
 			table.Append(data)
 			table.Render()
@@ -89,7 +101,7 @@ func InitSettingShell(shell *ishell.Shell) {
 			}
 		},
 	})
-	
+
 	baseSettingCmd.AddCmd(&ishell.Cmd{
 		Name: "socks",
 		Func: func(c *ishell.Context) {
@@ -344,6 +356,35 @@ func InitSettingShell(shell *ishell.Shell) {
 			log.Info("外网测试URL: ", setting.TestUrl())
 		},
 	})
+
+	// 版本设置
+	baseSettingCmd.AddCmd(&ishell.Cmd{
+		Name: "version.min",
+		Func: func(c *ishell.Context) {
+			if len(c.Args) > 0 {
+				err := setting.SetVersionMin(c.Args[0])
+				if err != nil {
+					log.Warn(err)
+					return
+				}
+			}
+			log.Info("版本最小值: ", setting.VersionMin())
+		},
+	})
+	baseSettingCmd.AddCmd(&ishell.Cmd{
+		Name: "version.max",
+		Func: func(c *ishell.Context) {
+			if len(c.Args) > 0 {
+				err := setting.SetVersionMax(c.Args[0])
+				if err != nil {
+					log.Warn(err)
+					return
+				}
+			}
+			log.Info("版本最大值: ", setting.VersionMax())
+		},
+	})
+
 	baseSettingCmd.AddCmd(&ishell.Cmd{
 		Name: "run_before",
 		Func: func(c *ishell.Context) {

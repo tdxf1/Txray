@@ -74,16 +74,19 @@ func (v *VLess) GetInfo() string {
 		buf.WriteString(fmt.Sprintf("%9s: %s\n", "Path", v.GetValue(field.SpPath)))
 		buf.WriteString(fmt.Sprintf("%9s: %s\n", "Host", v.GetHostValue(field.SpHost)))
 		buf.WriteString(fmt.Sprintf("%7s: %s\n", "Mode", v.GetValue(field.SpMode)))
+		buf.WriteString(fmt.Sprintf("%7s: %s\n", "extra", v.GetValue(field.SpExtra)))
 	case "xhttp":
 		buf.WriteString(fmt.Sprintf("%9s: %s\n", "Path", v.GetValue(field.XhPath)))
         buf.WriteString(fmt.Sprintf("%9s: %s\n", "Host", v.GetHostValue(field.XhHost)))
 		buf.WriteString(fmt.Sprintf("%7s: %s\n", "Mode", v.GetValue(field.XhMode)))
+		buf.WriteString(fmt.Sprintf("%7s: %s\n", "extra", v.GetValue(field.XhExtra)))
 	}
 	if v.GetValue(field.Security) == "reality" {
-		buf.WriteString(fmt.Sprintf("%9s: %s\n", "FingerPrint", v.GetValue(field.FingerPrint)))
-		buf.WriteString(fmt.Sprintf("%7s: %s\n", "reality公钥", v.GetValue(field.PublicKey)))
-		buf.WriteString(fmt.Sprintf("%9s: %s\n", "realityID", v.GetValue(field.ShortId)))
-		buf.WriteString(fmt.Sprintf("%7s: %s\n", "REALITY爬虫", v.GetValue(field.SpiderX)))
+		buf.WriteString(fmt.Sprintf("%9s: %s\n", "FingerPrint", v.GetValue(field.TLSFingerPrint)))
+		buf.WriteString(fmt.Sprintf("%7s: %s\n", "reality公钥", v.GetValue(field.RealityPublicKey)))
+		buf.WriteString(fmt.Sprintf("%9s: %s\n", "realityID", v.GetValue(field.RealityShortId)))
+		buf.WriteString(fmt.Sprintf("%7s: %s\n", "REALITY爬虫", v.GetValue(field.RealitySpiderX)))
+		buf.WriteString(fmt.Sprintf("%7s: %s\n", "MLDSA65验证", v.GetValue(field.RealityMldsa65Verify)))
 	}
 	buf.WriteString(fmt.Sprintf("%5s: %s\n", "底层传输", v.GetValue(field.Security)))
 	buf.WriteString(fmt.Sprintf("%9s: %s\n", "SNI", v.GetValue(field.SNI)))

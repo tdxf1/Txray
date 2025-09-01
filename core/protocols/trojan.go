@@ -44,6 +44,8 @@ func (t *Trojan) GetInfo() string {
 	buf.WriteString(fmt.Sprintf("%3s: %d\n", "端口", t.Port))
 	buf.WriteString(fmt.Sprintf("%3s: %s\n", "密码", t.Password))
 	buf.WriteString(fmt.Sprintf("%5s: %s\n", "SNI", t.Sni()))
+	buf.WriteString(fmt.Sprintf("%5s: %s\n", "ECH配置列表", t.EchConfigList()))
+	buf.WriteString(fmt.Sprintf("%9s: %s\n", "ECH强制查询", t.EchForceQuery()))
 	buf.WriteString(fmt.Sprintf("%3s: %s", "协议", t.GetProtocolMode()))
 	return buf.String()
 }
@@ -64,6 +66,22 @@ func (t *Trojan) GetLink() string {
 func (t *Trojan) Sni() string {
 	if t.Has("sni") {
 		return t.Get("sni")
+	}
+	return ""
+}
+
+// EchConfigList 返回 ECH 配置列表
+func (t *Trojan) EchConfigList() string {
+	if t.Has("echConfigList") {
+		return t.Get("echConfigList")
+	}
+	return ""
+}
+
+// EchForceQuery 返回 ECH 强制查询信息
+func (t *Trojan) EchForceQuery() string {
+	if t.Has("echForceQuery") {
+		return t.Get("echForceQuery")
 	}
 	return ""
 }

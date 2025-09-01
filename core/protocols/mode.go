@@ -13,6 +13,9 @@ const (
 	ModeShadowSocks  Mode = "ShadowSocks"  // ShadowSocks 协议
 	ModeShadowSocksR Mode = "ShadowSocksR" // ShadowSocksR 协议
 	ModeSocks        Mode = "Socks"        // Socks 协议
+	ModeSplitHTTP    Mode = "SplitHTTP"    // SplitHTTP 协议
+	ModeXHTTP        Mode = "XHTTP"        // XHTTP 协议
+	ModeHttpUpgrade  Mode = "HttpUpgrade"  // HttpUpgrade 协议
 )
 
 // String 方法将 Mode 类型转换为字符串

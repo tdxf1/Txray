@@ -1,4 +1,5 @@
 // core/protocols/parse.go 负责协议字符串的解析与转换
+// 参考：https://github.com/XTLS/Xray-core/discussions/716
 package protocols
 
 import (
@@ -20,30 +21,30 @@ func ParseLink(link string) Protocol {
 	case "vmess":
 		if obj := ParseVMessLink(link); obj != nil {
 			return obj
-		} 
+		}
 		if obj := ParseVMessAEADLink(link); obj != nil {
 			return obj
-		} 
+		}
 	case "vless":
 		if obj := ParseVLessLink(link); obj != nil {
 			return obj
-		} 
+		}
 	case "ss":
 		if obj := ParseSSLink(link); obj != nil {
 			return obj
-		} 
+		}
 	case "ssr":
 		if obj := ParseSSRLink(link); obj != nil {
 			return obj
-		} 
+		}
 	case "trojan":
 		if obj := ParseTrojanLink(link); obj != nil {
 			return obj
-		} 
+		}
 	case "socks":
 		if obj := ParseSocksLink(link); obj != nil {
 			return obj
-		} 
+		}
 	}
 	return nil
 }
@@ -222,6 +223,12 @@ func ParseVMessLink(link string) *VMess {
 	}
 	if alpn, ok := mapResult["alpn"]; ok {
 		vmess.Alpn = fmt.Sprintf("%v", alpn)
+	}
+	if echConfigList, ok := mapResult["echConfigList"]; ok {
+		vmess.EchConfigList = fmt.Sprintf("%v", echConfigList)
+	}
+	if echForceQuery, ok := mapResult["echForceQuery"]; ok {
+		vmess.EchForceQuery = fmt.Sprintf("%v", echForceQuery)
 	}
 	return vmess.Check()
 }

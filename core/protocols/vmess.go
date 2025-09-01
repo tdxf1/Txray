@@ -10,20 +10,22 @@ import (
 
 // VMess 结构体定义了 VMess 协议所需的各项属性
 type VMess struct {
-	V    string `json:"v"`
-	Ps   string `json:"ps"`
-	Add  string `json:"add"`
-	Port int    `json:"port"`
-	Id   string `json:"id"`
-	Scy  string `json:"scy"`
-	Aid  int    `json:"aid"`
-	Net  string `json:"net"`
-	Type string `json:"type"`
-	Host string `json:"host"`
-	Path string `json:"path"`
-	Tls  string `json:"tls"`
-	Sni  string `json:"sni"`
-	Alpn string `json:"alpn"`
+	V             string `json:"v"`
+	Ps            string `json:"ps"`
+	Add           string `json:"add"`
+	Port          int    `json:"port"`
+	Id            string `json:"id"`
+	Scy           string `json:"scy"`
+	Aid           int    `json:"aid"`
+	Net           string `json:"net"`
+	Type          string `json:"type"`
+	Host          string `json:"host"`
+	Path          string `json:"path"`
+	Tls           string `json:"tls"`
+	Sni           string `json:"sni"`
+	Alpn          string `json:"alpn"`
+	EchConfigList string `json:"echConfigList"`
+	EchForceQuery string `json:"echForceQuery"`
 }
 
 // GetProtocolMode 返回协议模式
@@ -63,6 +65,8 @@ func (v *VMess) GetInfo() string {
 	buf.WriteString(fmt.Sprintf("%5s: %s\n", "配置版本", v.V))
 	buf.WriteString(fmt.Sprintf("%9s: %s\n", "SNI", v.Sni))
 	buf.WriteString(fmt.Sprintf("%9s: %s\n", "Alpn", v.Alpn))
+	buf.WriteString(fmt.Sprintf("%9s: %s\n", "Ech配置列表", v.EchConfigList))
+	buf.WriteString(fmt.Sprintf("%9s: %s\n", "ECH强制查询", v.EchForceQuery))
 	buf.WriteString(fmt.Sprintf("%7s: %s", "协议", v.GetProtocolMode()))
 	return buf.String()
 }
@@ -70,23 +74,30 @@ func (v *VMess) GetInfo() string {
 // GetLink 生成 VMess 链接
 func (v *VMess) GetLink() string {
 	data := map[string]string{
-		"v":    v.V,
-		"ps":   v.Ps,
-		"add":  v.Add,
-		"port": strconv.Itoa(v.Port),
-		"id":   v.Id,
-		"aid":  strconv.Itoa(v.Aid),
-		"scy": v.Scy,
-		"net":  v.Net,
-		"type": v.Type,
-		"host": v.Host,
-		"path": v.Path,
-		"tls":  v.Tls,
-		"sni": v.Sni,
-		"alpn": v.Alpn,
+		"v":             v.V,
+		"ps":            v.Ps,
+		"add":           v.Add,
+		"port":          strconv.Itoa(v.Port),
+		"id":            v.Id,
+		"aid":           strconv.Itoa(v.Aid),
+		"scy":           v.Scy,
+		"net":           v.Net,
+		"type":          v.Type,
+		"host":          v.Host,
+		"path":          v.Path,
+		"tls":           v.Tls,
+		"sni":           v.Sni,
+		"alpn":          v.Alpn,
+		"echConfigList": v.EchConfigList,
+		"echForceQuery": v.EchForceQuery,
 	}
 	jsonData, _ := json.Marshal(data)
 	return "vmess://" + base64EncodeWithEq(string(jsonData))
+}
+
+// GetValue 根据字段获取对应的值（VMess 不支持新传输协议的字段，返回空字符串）
+func (v *VMess) GetValue(field interface{}) string {
+	return ""
 }
 
 // Check 检查 VMess 配置是否有效
