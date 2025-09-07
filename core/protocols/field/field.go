@@ -8,6 +8,11 @@ type Field struct {
 	Value string // 默认值
 }
 
+// ExtraField 结构体表示一个extra字段，支持返回interface{}类型的值
+type ExtraField struct {
+	Key string // 字段名
+}
+
 // NilStrField 返回一个字段名为 key 的 Field 实例，默认值为空字符串
 func NilStrField(key string) Field {
 	return Field{
@@ -29,6 +34,13 @@ func NewField(key, value string) Field {
 	return Field{
 		Key:   key,
 		Value: value,
+	}
+}
+
+// GetExtraValue 返回一个ExtraField实例，返回字典
+func GetExtraValue(key string) ExtraField {
+	return ExtraField{
+		Key: key,
 	}
 }
 
@@ -72,13 +84,13 @@ var (
 	SpPath  = NewField("path", "/")
 	SpHost  = NilStrField("host")
 	SpMode  = NewField("mode", "auto")
-	SpExtra = NilStrField("extra")
+	SpExtra = GetExtraValue("extra")
 
 	// xhttp （只有首字母大写的变量才能被包外访问）
 	XhPath  = NewField("path", "/")
 	XhHost  = NilStrField("host")
 	XhMode  = NewField("mode", "auto")
-	XhExtra = NilStrField("extra")
+	XhExtra = GetExtraValue("extra")
 
 	// REALITY
 	RealityPublicKey     = NilStrField("pbk") // REALITY的公钥

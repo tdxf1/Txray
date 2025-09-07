@@ -491,14 +491,14 @@ func vMessOutbound(vmess *protocols.VMess) interface{} {
 			"host":  vmess.GetValue(field.SpHost),
 			"path":  vmess.GetValue(field.SpPath),
 			"mode":  vmess.GetValue(field.SpMode),
-			"extra": vmess.GetValue(field.SpExtra),
+			"extra": vmess.GetExtraValue(field.SpExtra),
 		}
 	case "xhttp":
 		streamSettings["xhttpSettings"] = map[string]interface{}{
 			"host":  vmess.GetValue(field.XhHost),
 			"path":  vmess.GetValue(field.XhPath),
 			"mode":  vmess.GetValue(field.XhMode),
-			"extra": vmess.GetValue(field.XhExtra),
+			"extra": vmess.GetExtraValue(field.XhExtra),
 		}
 	case "xhttpupgrade":
 		streamSettings["xhttpUpgradeSettings"] = map[string]interface{}{
@@ -706,14 +706,14 @@ func vLessOutbound(vless *protocols.VLess) interface{} {
 			"host":  vless.GetValue(field.SpHost),
 			"path":  vless.GetValue(field.SpPath),
 			"mode":  vless.GetValue(field.SpMode),
-			"extra": vless.GetValue(field.SpExtra),
+			"extra": vless.GetExtraValue(field.SpExtra),
 		}
 	case "xhttp":
 		streamSettings["xhttpSettings"] = map[string]interface{}{
 			"host":  vless.GetValue(field.XhHost),
 			"path":  vless.GetValue(field.XhPath),
 			"mode":  vless.GetValue(field.XhMode),
-			"extra": vless.GetValue(field.XhExtra),
+			"extra": vless.GetExtraValue(field.XhExtra),
 		}
 	case "xhttpupgrade":
 		streamSettings["xhttpUpgradeSettings"] = map[string]interface{}{
@@ -851,14 +851,14 @@ func vMessAEADOutbound(vmess *protocols.VMessAEAD) interface{} {
 			"host":  vmess.GetValue(field.SpHost),
 			"path":  vmess.GetValue(field.SpPath),
 			"mode":  vmess.GetValue(field.SpMode),
-			"extra": vmess.GetValue(field.SpExtra),
+			"extra": vmess.GetExtraValue(field.SpExtra),
 		}
 	case "xhttp":
 		streamSettings["xhttpSettings"] = map[string]interface{}{
 			"host":  vmess.GetValue(field.XhHost),
 			"path":  vmess.GetValue(field.XhPath),
 			"mode":  vmess.GetValue(field.XhMode),
-			"extra": vmess.GetValue(field.XhExtra),
+			"extra": vmess.GetExtraValue(field.XhExtra),
 		}
 	case "xhttpupgrade":
 		streamSettings["xhttpUpgradeSettings"] = map[string]interface{}{
