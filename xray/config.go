@@ -419,7 +419,7 @@ func vMessOutbound(vmess *protocols.VMess) interface{} {
 			tlsSettings["alpn"] = strings.Split(vmess.Alpn, ",")
 		}
 		if vmess.EchConfigList != "" {
-			tlsSettings["echConfigList"] = vmess.EchConfigList	
+			tlsSettings["echConfigList"] = vmess.EchConfigList
 		}
 		if vmess.EchForceQuery != "" {
 			tlsSettings["echForceQuery"] = vmess.EchForceQuery
