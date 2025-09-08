@@ -100,6 +100,11 @@ func (v *VMess) GetValue(field interface{}) string {
 	return ""
 }
 
+// GetExtraValue 根据ExtraField获取对应的值（VMess 不支持新传输协议的字段，返回空对象）
+func (v *VMess) GetExtraValue(field interface{}) interface{} {
+	return map[string]interface{}{}
+}
+
 // Check 检查 VMess 配置是否有效
 func (v *VMess) Check() *VMess {
 	if v.Add != "" && v.Port > 0 && v.Port <= 65535 && v.Ps != "" && v.Id != "" && v.Net != "" {

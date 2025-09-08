@@ -73,12 +73,12 @@ func (v *VMessAEAD) GetInfo() string {
 		buf.WriteString(fmt.Sprintf("%9s: %s\n", "Path", v.GetValue(field.SpPath)))
 		buf.WriteString(fmt.Sprintf("%9s: %s\n", "Host", v.GetHostValue(field.SpHost)))
 		buf.WriteString(fmt.Sprintf("%7s: %s\n", "Mode", v.GetValue(field.SpMode)))
-		buf.WriteString(fmt.Sprintf("%7s: %s\n", "extra", v.GetValue(field.SpExtra)))
+		buf.WriteString(fmt.Sprintf("%7s: %v\n", "extra", v.GetExtraValue(field.SpExtra)))
 	case "xhttp":
 		buf.WriteString(fmt.Sprintf("%9s: %s\n", "Path", v.GetValue(field.XhPath)))
-        buf.WriteString(fmt.Sprintf("%9s: %s\n", "Host", v.GetHostValue(field.XhHost)))
+		buf.WriteString(fmt.Sprintf("%9s: %s\n", "Host", v.GetHostValue(field.XhHost)))
 		buf.WriteString(fmt.Sprintf("%7s: %s\n", "Mode", v.GetValue(field.XhMode)))
-		buf.WriteString(fmt.Sprintf("%7s: %s\n", "extra", v.GetValue(field.XhExtra)))
+		buf.WriteString(fmt.Sprintf("%7s: %v\n", "extra", v.GetExtraValue(field.XhExtra)))
 	}
 	if v.GetValue(field.Security) == "reality" {
 		buf.WriteString(fmt.Sprintf("%9s: %s\n", "FingerPrint", v.GetValue(field.TLSFingerPrint)))
@@ -113,6 +113,18 @@ func (v *VMessAEAD) GetValue(field field.Field) string {
 		return v.Get(field.Key)
 	}
 	return field.Value
+}
+
+// GetExtraValue 根据ExtraField获取对应的值，当值为空时返回空对象
+func (v *VMessAEAD) GetExtraValue(field field.ExtraField) interface{} {
+	if v.Has(field.Key) {
+		value := v.Get(field.Key)
+		if value == "" {
+			return map[string]interface{}{}
+		}
+		return value
+	}
+	return map[string]interface{}{}
 }
 
 // H2Host SNI
