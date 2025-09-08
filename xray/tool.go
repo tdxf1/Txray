@@ -18,6 +18,10 @@ import (
 //   - int: 延迟时间（毫秒），出错时返回-1
 //   - string: HTTP响应状态，出错时返回"Error"
 func TestNode(url string, port int, timeout int) (int, string) {
+
+	// 延迟 1 秒再开始测速
+	time.Sleep(1 * time.Second)
+	
 	start := time.Now()
 	res, e := GetBySocks5Proxy(url, "127.0.0.1", port, time.Duration(timeout)*time.Second)
 	elapsed := time.Since(start)
